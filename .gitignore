@@ -2,3 +2,4 @@
 data/BAM/*.bam
 data/BAM/*.bai
 data/FASTQ/*.fastq.gz
+bin/ScriptManager*.jar
