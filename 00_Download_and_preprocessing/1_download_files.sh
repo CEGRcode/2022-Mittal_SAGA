@@ -32,6 +32,12 @@ python bin/download_ALL_PEGR_py3.py -u USER_EMAIL -g GALAXY_API_KEY -p PEGR_API_
 mv tmp-galaxy/*.bam data/BAM/
 mv tmp-galaxy/*.fastq.gz data/FASTQ/
 
+# Download all RNA samples (Mittal)
+python bin/download_ALL_PEGR_py3.py -u USER_EMAIL -g GALAXY_API_KEY -p PEGR_API_KEY -n tmp-rna-galaxy -f data/pegr_ids_rna.txt
+mv tmp-rna-galaxy/*.bam data/RNA-BAM/
+mv tmp-rna-galaxy/*.fastq.gz data/RNA-FASTQ/
+
 # Clean-up
 rm masterNoTag_20180928.zip
 rm -r tmp-galaxy
+rm -r tmp-rna-galaxy
