@@ -12,21 +12,32 @@ module load samtools
 module load anaconda3
 source activate mittal
 
+# Cross all BED x all BAM to generate heatmap and composite libraries
+
 WRK=/path/to/2022-Mittal_SAGA
+BAMDIR=$WRK/data/BAM
 CONTROL=$WRK/data/BAM/masterNoTag_20180928.bam
 BLACKLIST=$WRK/data/ChexMix_Peak_Filter_List_190612.bed
 FDIR=$WRK/data/NormalizationFactors
 
-SCRIPTMANAGER=../bin/ScriptManager-v0.13-$PBS_ARRAYID.jar
-COMPOSITES=$WRK/../bin/sum_Col_CDT.pl
-SUM=$WRK/../bin/sum_Row_CDT.pl
+WINDOW=50
+NFR=$WRK/data/RefPT-YEP/NFR_50bp.bed
+NFR03=$WRK/data/RefPT-YEP/NFR_03_50bp.bed
+NFR04=$WRK/data/RefPT-YEP/NFR_04_50bp.bed
+NFRBoth=$WRK/data/RefPT-YEP/NFR_03-04_50bp.bed
+
+ORIGINAL_SCRIPTMANAGER=$WRK/bin/ScriptManager-v0.13.jar
+SCRIPTMANAGER=$WRK/bin/ScriptManager-v0.13-$PBS_ARRAYID.jar
+COMPOSITES=$WRK/bin/sum_Col_CDT.pl
+SUM=$WRK/bin/sum_Row_CDT.pl
 
 cd $WRK
 [ -d logs ] || mkdir logs
 [ -d $FDIR ] || mkdir $FDIR
+cp $ORIGINAL_SCRIPTMANAGER $SCRIPTMANAGER
 
 # Get BAM filename and type
-BAMFILE=`ls data/BAM/*.bam |head -n $PBS_ARRAYID | tail -1`;
+BAMFILE=`ls $BAMDIR/*.bam |head -n $PBS_ARRAYID | tail -1`;
 BAM=`basename $BAMFILE ".bam"`
 TYPE=`echo $BAM |cut -d"_" -f2`
 
@@ -38,15 +49,7 @@ if [ $TYPE == "H2B" ] || [ $TYPE == "H2BK123ub" ] || [ $TYPE == "H3" ] || [ $TYP
 then
 	echo "Calculate NFR window normalization factors"
 	
-	WINDOW=50
-	
-	NFR=$WRK/data/RefPT-YEP/NFR_50bp.bed
-	NFR03=$WRK/data/RefPT-YEP/NFR_03_50bp.bed
-	NFR04=$WRK/data/RefPT-YEP/NFR_04_50bp.bed
-	NFRBoth=$WRK/data/RefPT-YEP/NFR_03-04_50bp.bed
-	
-	BAM=`basename $BAMFILE ".bam"`
-	TEMP=$FDIR/$BAM\_NFRw
+	TEMP=$WRK/data/NormalizationFactors/$BAM\_NFRw
 	[ -d $TEMP ] || mkdir $TEMP
 	
 	SF_FILE=$TEMP\_ScalingFactor.out
@@ -97,10 +100,15 @@ then
 	echo $'Both:\t'$AVERAGE >> $SF_FILE
 
 	#rm -r $TEMP
+		
 elif [[ $TYPE == "polyA-RNA" ]];
 then
-	echo "Skip Pol-A RNAseq"
+	echo "Calculate 2 factors for RNAseq"
+	#TOTALTAG=`samtools view -H $BAMFILE | grep '@SQ' | cut -d":" -f 3 | awk '{sum+=$1} END{print sum/1000000}'`
+	java -jar $SCRIPTMANAGER read-analysis scaling-factor $BAMFILE -f $BLACKLIST -o $WRK/data/NormalizationFactors/$BAM\_Totalb
+	java -jar $SCRIPTMANAGER read-analysis scaling-factor $BAMFILE -f $BLACKLIST --ncis -c $CONTROL -w 500 -o $WRK/data/NormalizationFactors/$BAM\_NCISb
 else
+	#Classic TF procedure
 	echo "Calculate classic TF NCIS normalization factors"
 	java -jar $SCRIPTMANAGER read-analysis scaling-factor $BAMFILE -f $BLACKLIST --ncis -c $CONTROL -w 500 -o $WRK/data/NormalizationFactors/$BAM\_NCISb
 fi
@@ -108,3 +116,4 @@ fi
 
 
 
+rm $SCRIPTMANAGER
