@@ -4,3 +4,4 @@ data/BAM/*.bai
 data/FASTQ/*.fastq.gz
 bin/ScriptManager*.jar
 data/RefPT-YEP/tmp/*
+02_Create_Gene_Classes/tmp
