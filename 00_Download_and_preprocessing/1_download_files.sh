@@ -11,8 +11,12 @@ module load samtools
 module load anaconda3
 source activate mittal
 
+# Update path and these variables for accessing datasets
 WRK=/path/to/2022-Mittal_SAGA
 SCRIPTMANAGER=$WRK/bin/ScriptManager-v0.13.jar
+USER_EMAIL=
+GALAXY_API_KEY=
+PEGR_API_KEY=
 
 cd $WRK
 [ -d logs ] || mkdir logs
@@ -28,12 +32,12 @@ mv masterNoTag_20180928.bam data/BAM/
 samtools index data/BAM/masterNoTag_20180928.bam
 
 # Download all sequencing samples (Mittal & YEP)
-python bin/download_ALL_PEGR_py3.py -u USER_EMAIL -g GALAXY_API_KEY -p PEGR_API_KEY -n tmp-galaxy -f data/sample_ids.txt
+python bin/download_ALL_PEGR_py3.py -u $USER_EMAIL -g $GALAXY_API_KEY -p $PEGR_API_KEY -n tmp-galaxy -f data/sample_ids.txt
 mv tmp-galaxy/*.bam data/BAM/
 mv tmp-galaxy/*.fastq.gz data/FASTQ/
 
 # Download all RNA samples (Mittal)
-python bin/download_ALL_PEGR_py3.py -u USER_EMAIL -g GALAXY_API_KEY -p PEGR_API_KEY -n tmp-rna-galaxy -f data/pegr_ids_rna.txt
+python bin/download_ALL_PEGR_py3.py -u $USER_EMAIL -g $GALAXY_API_KEY -p $PEGR_API_KEY -n tmp-rna-galaxy -f data/pegr_ids_rna.txt
 mv tmp-rna-galaxy/*.bam data/RNA-BAM/
 mv tmp-rna-galaxy/*.fastq.gz data/RNA-FASTQ/
 
