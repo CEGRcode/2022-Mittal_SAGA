@@ -2,6 +2,15 @@
 
 # This script builds the inital reference files and calculates occupancies used to make the Mittal 2022 gene classes
 
+# Normalization factors are calculated for each of the 6 samples (Mock Heat Shock and Heat Shock for each of Sua7, Spt7, and Taf2 targets)
+# Occupancy calculation is made for each gene (centered around Sua7 or STM feature in promoter) and saved as a score in a BED file for each sample.
+#   tmp/Sua7_sort-Sua7-12275-Offset-NormalizedCount.bed
+#   tmp/Sua7_sort-Sua7-26344-Offset-NormalizedCount.bed
+#   tmp/STM_sort-Spt7-11960-Offset-NormalizedCount.bed
+#   tmp/STM_sort-Spt7-20115-Offset-NormalizedCount.bed
+#   tmp/Sua7_sort-Taf2-11846-Offset-NormalizedCount.bed
+#   tmp/Sua7_sort-Taf2-28736-Offset-NormalizedCount.bed
+
 module load gcc
 module load samtools
 module load anaconda3
