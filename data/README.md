@@ -14,5 +14,5 @@ Aligned samples (FASTQ format) from this publication. These files are the inputs
 ### data/BAM/*.bam
 Aligned samples (BAM format) from both the Yeast Epigenome Project (Rossi et al, 2020. __Nature__) and this publication. These files are used to generate Mittal gene class reference files and figures throughout the paper
 
-### data/RefPT/*.bed
-Reference points generated based on Rossi_2021_Supplementary_Data_1.txt. Scripts for generating these reference points will be included in this repo
+### data/RefPT-YEP/*.bed
+Reference points generated based on Rossi_2021_Supplementary_Data_1.txt. Script for generating these reference points can be found at `data/RefPT-YEP/build_refs.sh`.
