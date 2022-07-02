@@ -20,7 +20,7 @@ TAF2_HS=$TEMP/Sua7_sort-Taf2-28736-Offset-NormalizedCount.bed
 
 
 #===Script Shortcuts===
-SCRIPTMANAGER=$WRK/bin/ScriptManager-v0.13.jar
+SCRIPTMANAGER=$BIN/ScriptManager-v0.13.jar
 FILTERS=$BIN/filter_BED_by_string_ColumnSelect.pl
 FILTERV=$BIN/filter_BED_by_value_ColumnSelect.pl
 FILTERL=$BIN/filter_BED_by_list_ColumnSelect.pl
@@ -41,6 +41,7 @@ cd $TEMP
 
 
 #===Build M01 and H01 gene classes===
+echo Build M01/H01...
 
 # Filter to keep only 01_RP
 perl $FILTERS $TSS 01_RP 4 keep TSS_01-RP.bed
@@ -64,8 +65,9 @@ perl $SORT Sua7_RP_score-Spt7-20115.bed desc $MITTAL/Sua7_RP_sort-Spt7-20115.bed
 java -jar $SCRIPTMANAGER coordinate-manipulation expand-bed -c 1000 $MITTAL/Sua7_RP_sort-Spt7-11960.bed -o $MITTAL/Sua7_RP_sort-Spt7-11960_1000bp.bed
 java -jar $SCRIPTMANAGER coordinate-manipulation expand-bed -c 1000 $MITTAL/Sua7_RP_sort-Spt7-20115.bed -o $MITTAL/Sua7_RP_sort-Spt7-20115_1000bp.bed
 
+
 #===Build M02/H02 gene classes===
-echo Build X02
+echo Build M02/H02...
 
 # Filter to remove 01_RP
 perl $FILTERL $SUA7_MHS 01-RP.tab 3 remove Sua7_STM-TFO-UNB_sort-Sua7-12275_unfiltered.bed
@@ -121,6 +123,7 @@ perl $UPDATES Sua7_H02b_sort-Sua7Taf2-ratio.bed Sua7-26344_occupancy.tab Sua7_H0
 #H02A=Sua7_H02a_sort-Sua7Taf2-ratio
 #H02B=Sua7_H02b_sort-Sua7Taf2-ratio
 
+# === Write M02/H02 gene classes ===
 M02A=$MITTAL/FEAT-Pol-II_RefPT-Sua7___SubFEAT-25C_M02a__150_SORT-Sua7occ
 M02B=$MITTAL/FEAT-Pol-II_RefPT-Sua7___SubFEAT-25C_M02b__150_SORT-Sua7occ
 H02A=$MITTAL/FEAT-Pol-II_RefPT-Sua7___SubFEAT-37C_H02a__150_SORT-Sua7occ
@@ -140,7 +143,9 @@ java -jar $SCRIPTMANAGER coordinate-manipulation expand-bed -c 1000 $H02B.bed -o
 
 #cut -f4 tmp_makerefs/Sua7_Mittal-M02a_sort-Sua7Taf2-ratio.bed Chitvan_BED/M02a_TFIIB_1000bp.bed |sort |uniq -c |awk '{print $1}'  |sort |uniq -c
 
-REFPT_NUC=Nuc_YEPclass.bed
+
+#===Write M02/H02 with Nucleosome RefPT===
+REFPT_NUC=$ROSSI/Nuc.bed
 
 NM02A=$MITTAL/FEAT-Pol-II_RefPT+1Nuc___SubFEAT-25C_M02a__150_SORT-Sua7occ
 NM02B=$MITTAL/FEAT-Pol-II_RefPT+1Nuc___SubFEAT-25C_M02b__150_SORT-Sua7occ
@@ -160,15 +165,22 @@ java -jar $SCRIPTMANAGER coordinate-manipulation expand-bed -c 100 $NH02A.bed -o
 java -jar $SCRIPTMANAGER coordinate-manipulation expand-bed -c 100 $NH02B.bed -o $NH02B\_1000bp.bed
 
 
-cd ../
+#===Write M02/H02 with Upstream Activation Sequence (UAS) RefPT===
+REFPT_UAS=$ROSSI/STM.bed
 
-cut -f4 tmp_makerefs/$M02A.bed Chitvan_BED/M02a_TFIIB_1000bp.bed |sort |uniq -c |wc -l 
-#169
-cut -f4 tmp_makerefs/$M02B.bed Chitvan_BED/M02b_TFIIB_1000bp.bed |sort |uniq -c |wc -l 
-#219
-cut -f4 tmp_makerefs/$H02A.bed Chitvan_BED/H02a_TFIIB_1000bp.bed |sort |uniq -c |wc -l 
-#170
-cut -f4 tmp_makerefs/$H02B.bed Chitvan_BED/H02b_TFIIB_1000bp.bed |sort |uniq -c |wc -l 
-#218
+UM02A=$MITTAL/FEAT-Pol-II_RefPT-UAS___SubFEAT-25C_M02a__150_SORT-Sua7occ
+UM02B=$MITTAL/FEAT-Pol-II_RefPT-UAS___SubFEAT-25C_M02b__150_SORT-Sua7occ
+UH02A=$MITTAL/FEAT-Pol-II_RefPT-UAS___SubFEAT-37C_H02a__150_SORT-Sua7occ
+UH02B=$MITTAL/FEAT-Pol-II_RefPT-UAS___SubFEAT-37C_H02b__150_SORT-Sua7occ
 
+# Get UAS RefPT
+perl $UPDATEC $M02A.bed $REFPT_UAS $UM02A.bed
+perl $UPDATEC $M02B.bed $REFPT_UAS $UM02B.bed
+perl $UPDATEC $H02A.bed $REFPT_UAS $UH02A.bed
+perl $UPDATEC $H02B.bed $REFPT_UAS $UH02B.bed
 
+#  Expand BED 200bp from center
+java -jar $SCRIPTMANAGER coordinate-manipulation expand-bed -c 100 $UM02A.bed -o $UM02A\_1000bp.bed
+java -jar $SCRIPTMANAGER coordinate-manipulation expand-bed -c 100 $UM02B.bed -o $UM02B\_1000bp.bed
+java -jar $SCRIPTMANAGER coordinate-manipulation expand-bed -c 100 $UH02A.bed -o $UH02A\_1000bp.bed
+java -jar $SCRIPTMANAGER coordinate-manipulation expand-bed -c 100 $UH02B.bed -o $UH02B\_1000bp.bed

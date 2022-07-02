@@ -18,6 +18,7 @@ source activate mittal
 
 WRK=/path/to/2022-Mittal_SAGA/02_Create_Gene_Classes
 BIN=$WRK/../bin
+DBAM=$WRK/../data/BAM/
 FDIR=$WRK/NormalizationFactors/
 CONTROL=$WRK/../data/BAM/masterNoTag_20180928.bam
 BLACKLIST=$WRK/../data/ChexMix_Peak_Filter_List_190612.bed
@@ -41,15 +42,15 @@ if [ -f $SCRIPTMANAGER ]; then
 fi
 
 ##--------Calculate Normalization Values--------
-for BAMFILE in "data/BAM/11846_Taf2_i5006_BY4741_-_XO_FilteredBAM.bam" \
- "data/BAM/12275_Sua7_i5006_BY4741_-_XO_FilteredBAM.bam" \
- "data/BAM/26344_Sua7_i5006_BY4741_-_XO_FilteredBAM.bam" \
- "data/BAM/11960_Spt7_i5006_BY4741_-_XO_FilteredBAM.bam" \
- "data/BAM/20115_Spt7_i5006_BY4741_-_XO_FilteredBAM.bam" \
- "data/BAM/28736_Taf2_i5006_BY4741_-_XO_FilteredBAM.bam";
+for BAM in "11846_Taf2_i5006_BY4741_-_XO_FilteredBAM" \
+"12275_Sua7_i5006_BY4741_-_XO_FilteredBAM" \
+"26344_Sua7_i5006_BY4741_-_XO_FilteredBAM" \
+"11960_Spt7_i5006_BY4741_-_XO_FilteredBAM" \
+"20115_Spt7_i5006_BY4741_-_XO_FilteredBAM" \
+"28736_Taf2_i5006_BY4741_-_XO_FilteredBAM";
 do
+	BAMFILE=$DBAM/$BAM.bam
 	[ -f $BAMFILE.bai ] || samtools index $BAMFILE
-	BAM=`basename $BAMFILE ".bam"`
 	java -jar $SCRIPTMANAGER read-analysis scaling-factor $BAMFILE --ncis -c $CONTROL -f $BLACKLIST -w 500 -o $FDIR/$BAM
 done
 
@@ -60,7 +61,7 @@ count_occupancy () {
 	REFFILE=$1
 	BAMFILE=$2
 	OCCUPANCY=$3
-	
+
 	BAM=`basename $BAMFILE ".bam"`
 	REF=`basename $REFFILE ".bed"`
 	BED=$REF\_200bp
@@ -72,7 +73,7 @@ count_occupancy () {
 	java -jar $SCRIPTMANAGER coordinate-manipulation expand-bed -c 200 $REFFILE -o $BED.bed
 	# Tag Pileup
 	java -jar $SCRIPTMANAGER read-analysis tag-pileup $BED.bed $BAMFILE -M $BASE
-	
+
 	echo "MERGE"
 	# Merge offset slices from anti and sense
 	paste <(cut -f1,2,16-116 $BASE\_sense.cdt) <(cut -f47-147 $BASE\_anti.cdt) > CDT
@@ -81,7 +82,7 @@ count_occupancy () {
 	perl $SORT BED desc $OCCUPANCY-TagCount.bed
 
 	# Merge normalized slices from anti and sense
-	FACTOR=`grep 'Scaling factor' $WRK/data/NormalizationFactors/$BAM\_NCISb_ScalingFactors.out | awk -F" " '{print $3}'`
+	FACTOR=`grep 'Scaling factor' $FDIR/$BAM\_ScalingFactors.out | awk -F" " '{print $3}'`
 	java -jar $SCRIPTMANAGER read-analysis scale-matrix CDT -s $FACTOR -o NORMALIZED
 	perl $SUM NORMALIZED NTAB
 	perl $UPDATES $REFFILE NTAB NBED
@@ -92,24 +93,24 @@ count_occupancy () {
 }
 
 #===Sua7===
-for SUA7 in "$BAM/12275_Sua7_i5006_BY4741_-_YPD_WT_XO_FilteredBAM.bam" \
- "$BAM/26344_Sua7_i5006_BY4741_-_YPD_HS6_XO_FilteredBAM.bam";
+for SUA7 in "$DBAM/12275_Sua7_i5006_BY4741_-_XO_FilteredBAM.bam" \
+ "$DBAM/26344_Sua7_i5006_BY4741_-_XO_FilteredBAM.bam";
 do
 	ID=`basename $SUA7 ".bam" | awk -F"_" '{print $1}'`
 	count_occupancy $REFPT/Sua7.bed $SUA7 $TEMP/Sua7_sort-Sua7-$ID-Offset
 done
 
 #===Taf2===
-for TAF2 in "$BAM/11846_Taf2_i5006_BY4741_-_YPD_-_XO_FilteredBAM.bam" \
- "$BAM/28736_Taf2_i5006_BY4741_-_YPD_HS6_XO_FilteredBAM.bam";
+for TAF2 in "$DBAM/11846_Taf2_i5006_BY4741_-_XO_FilteredBAM.bam" \
+ "$DBAM/28736_Taf2_i5006_BY4741_-_XO_FilteredBAM.bam";
 do
 	ID=`basename $TAF2 ".bam" | awk -F"_" '{print $1}'`
 	count_occupancy $REFPT/Sua7.bed $TAF2 $TEMP/Sua7_sort-Taf2-$ID-Offset
 done
 
 #===Spt7===
-for SPT7 in "$BAM/11960_Spt7_i5006_BY4741_-_YPD_MHS_XO_FilteredBAM.bam" \
- "$BAM/20115_Spt7_i5006_BY4741_-_YPD_HS6_XO_FilteredBAM.bam";
+for SPT7 in "$DBAM/11960_Spt7_i5006_BY4741_-XO_FilteredBAM.bam" \
+ "$DBAM/20115_Spt7_i5006_BY4741_-_XO_FilteredBAM.bam";
 do
 	ID=`basename $SPT7 ".bam" | awk -F"_" '{print $1}'`
 	count_occupancy $REFPT/STM.bed $SPT7 $TEMP/STM_sort-Spt7-$ID-Offset
