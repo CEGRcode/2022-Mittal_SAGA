@@ -183,3 +183,20 @@ java -jar $SCRIPTMANAGER coordinate-manipulation expand-bed -c 1000 $M03A.bed -o
 java -jar $SCRIPTMANAGER coordinate-manipulation expand-bed -c 1000 $M03B.bed -o $M03B\_1000bp.bed
 java -jar $SCRIPTMANAGER coordinate-manipulation expand-bed -c 1000 $H03A.bed -o $H03A\_1000bp.bed
 java -jar $SCRIPTMANAGER coordinate-manipulation expand-bed -c 1000 $H03B.bed -o $H03B\_1000bp.bed
+
+
+#===Build M04/H04 gene classes===
+echo Build M04/H04...
+
+M04=$MITTAL/FEAT-Pol-II_RefPT-Sua7___SubFEAT-25C_M04__150_SORT-Sua7occ.bed
+H04=$MITTAL/FEAT-Pol-II_RefPT-Sua7___SubFEAT-37C_H04__150_SORT-Sua7occ.bed
+
+HEAD_CT=`wc -l Sua7_minusRP-minusH02_sort-Spt7-20115.bed | awk '{print $1/2+75}'`
+
+# Pull M04/H04 classes from middle
+head -n $HEAD_CT Sua7_minusRP-minusM02_sort-Spt7-11960.bed | tail -n 150 > $M04.bed
+head -n $HEAD_CT Sua7_minusRP-minusH02_sort-Spt7-20115.bed | tail -n 150 > $H04.bed
+
+# Expand TFIIB/Sua7 coordinates to 1000bp
+java -jar $SCRIPTMANAGER coordinate-manipulation expand-bed -c 1000 $M04.bed -o $M04\_1000bp.bed
+java -jar $SCRIPTMANAGER coordinate-manipulation expand-bed -c 1000 $H04.bed -o $H04\_1000bp.bed
