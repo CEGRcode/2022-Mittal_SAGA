@@ -26,20 +26,32 @@ REFPT_NUC=$ROSSI/Nuc.bed
 
 NM02A=$MITTAL/FEAT-Pol-II_RefPT+1Nuc___SubFEAT-25C_M02a__150_SORT-Sua7occ
 NM02B=$MITTAL/FEAT-Pol-II_RefPT+1Nuc___SubFEAT-25C_M02b__150_SORT-Sua7occ
+NM03A=$MITTAL/FEAT-Pol-II_RefPT+1Nuc___SubFEAT-25C_M03a__150_SORT-Sua7occ
+NM03B=$MITTAL/FEAT-Pol-II_RefPT+1Nuc___SubFEAT-25C_M03b__150_SORT-Sua7occ
 NH02A=$MITTAL/FEAT-Pol-II_RefPT+1Nuc___SubFEAT-37C_H02a__150_SORT-Sua7occ
 NH02B=$MITTAL/FEAT-Pol-II_RefPT+1Nuc___SubFEAT-37C_H02b__150_SORT-Sua7occ
+NH03A=$MITTAL/FEAT-Pol-II_RefPT+1Nuc___SubFEAT-37C_H03a__150_SORT-Sua7occ
+NH03B=$MITTAL/FEAT-Pol-II_RefPT+1Nuc___SubFEAT-37C_H03b__150_SORT-Sua7occ
 
 # Get Nuc RefPT
 perl $UPDATEC $M02A.bed $REFPT_NUC $NM02A.bed
 perl $UPDATEC $M02B.bed $REFPT_NUC $NM02B.bed
+perl $UPDATEC $M03A.bed $REFPT_NUC $NM03A.bed
+perl $UPDATEC $M03B.bed $REFPT_NUC $NM03B.bed
 perl $UPDATEC $H02A.bed $REFPT_NUC $NH02A.bed
 perl $UPDATEC $H02B.bed $REFPT_NUC $NH02B.bed
+perl $UPDATEC $H03A.bed $REFPT_NUC $NH03A.bed
+perl $UPDATEC $H03B.bed $REFPT_NUC $NH03B.bed
 
 #  Expand BED 200bp from center
 java -jar $SCRIPTMANAGER coordinate-manipulation expand-bed -c 100 $NM02A.bed -o $NM02A\_1000bp.bed
 java -jar $SCRIPTMANAGER coordinate-manipulation expand-bed -c 100 $NM02B.bed -o $NM02B\_1000bp.bed
+java -jar $SCRIPTMANAGER coordinate-manipulation expand-bed -c 100 $NM03A.bed -o $NM03A\_1000bp.bed
+java -jar $SCRIPTMANAGER coordinate-manipulation expand-bed -c 100 $NM03B.bed -o $NM03B\_1000bp.bed
 java -jar $SCRIPTMANAGER coordinate-manipulation expand-bed -c 100 $NH02A.bed -o $NH02A\_1000bp.bed
 java -jar $SCRIPTMANAGER coordinate-manipulation expand-bed -c 100 $NH02B.bed -o $NH02B\_1000bp.bed
+java -jar $SCRIPTMANAGER coordinate-manipulation expand-bed -c 100 $NH03A.bed -o $NH03A\_1000bp.bed
+java -jar $SCRIPTMANAGER coordinate-manipulation expand-bed -c 100 $NH03B.bed -o $NH03B\_1000bp.bed
 
 
 #===Write M02/H02 with Upstream Activation Sequence (UAS) RefPT===
@@ -47,17 +59,29 @@ REFPT_UAS=$ROSSI/STM.bed
 
 UM02A=$MITTAL/FEAT-Pol-II_RefPT-UAS___SubFEAT-25C_M02a__150_SORT-Sua7occ
 UM02B=$MITTAL/FEAT-Pol-II_RefPT-UAS___SubFEAT-25C_M02b__150_SORT-Sua7occ
+UM03A=$MITTAL/FEAT-Pol-II_RefPT-UAS___SubFEAT-25C_M03a__150_SORT-Sua7occ
+UM03B=$MITTAL/FEAT-Pol-II_RefPT-UAS___SubFEAT-25C_M03b__150_SORT-Sua7occ
 UH02A=$MITTAL/FEAT-Pol-II_RefPT-UAS___SubFEAT-37C_H02a__150_SORT-Sua7occ
 UH02B=$MITTAL/FEAT-Pol-II_RefPT-UAS___SubFEAT-37C_H02b__150_SORT-Sua7occ
+UH03A=$MITTAL/FEAT-Pol-II_RefPT-UAS___SubFEAT-37C_H03a__150_SORT-Sua7occ
+UH03B=$MITTAL/FEAT-Pol-II_RefPT-UAS___SubFEAT-37C_H03b__150_SORT-Sua7occ
 
 # Get UAS RefPT
 perl $UPDATEC $M02A.bed $REFPT_UAS $UM02A.bed
 perl $UPDATEC $M02B.bed $REFPT_UAS $UM02B.bed
+perl $UPDATEC $M03A.bed $REFPT_UAS $UM03A.bed
+perl $UPDATEC $M03B.bed $REFPT_UAS $UM03B.bed
 perl $UPDATEC $H02A.bed $REFPT_UAS $UH02A.bed
 perl $UPDATEC $H02B.bed $REFPT_UAS $UH02B.bed
+perl $UPDATEC $H03A.bed $REFPT_UAS $UH03A.bed
+perl $UPDATEC $H03B.bed $REFPT_UAS $UH03B.bed
 
 #  Expand BED 200bp from center
 java -jar $SCRIPTMANAGER coordinate-manipulation expand-bed -c 100 $UM02A.bed -o $UM02A\_1000bp.bed
 java -jar $SCRIPTMANAGER coordinate-manipulation expand-bed -c 100 $UM02B.bed -o $UM02B\_1000bp.bed
+java -jar $SCRIPTMANAGER coordinate-manipulation expand-bed -c 100 $UM03A.bed -o $UM03A\_1000bp.bed
+java -jar $SCRIPTMANAGER coordinate-manipulation expand-bed -c 100 $UM03B.bed -o $UM03B\_1000bp.bed
 java -jar $SCRIPTMANAGER coordinate-manipulation expand-bed -c 100 $UH02A.bed -o $UH02A\_1000bp.bed
 java -jar $SCRIPTMANAGER coordinate-manipulation expand-bed -c 100 $UH02B.bed -o $UH02B\_1000bp.bed
+java -jar $SCRIPTMANAGER coordinate-manipulation expand-bed -c 100 $UH03A.bed -o $UH03A\_1000bp.bed
+java -jar $SCRIPTMANAGER coordinate-manipulation expand-bed -c 100 $UH03B.bed -o $UH03B\_1000bp.bed

@@ -109,13 +109,6 @@ perl $UPDATES Sua7_M02b_sort-Sua7Taf2-ratio.bed <(cut -f4,5 $SUA7_MHS) Sua7_M02b
 perl $UPDATES Sua7_H02a_sort-Sua7Taf2-ratio.bed <(cut -f4,5 $SUA7_HS) Sua7_H02a_score-Sua7-26344.bed
 perl $UPDATES Sua7_H02b_sort-Sua7Taf2-ratio.bed <(cut -f4,5 $SUA7_HS) Sua7_H02b_score-Sua7-26344.bed
 
-
-#M02A=Sua7_M02a_sort-Sua7Taf2-ratio
-#M02B=Sua7_M02b_sort-Sua7Taf2-ratio
-#H02A=Sua7_H02a_sort-Sua7Taf2-ratio
-#H02B=Sua7_H02b_sort-Sua7Taf2-ratio
-
-# === Write M02/H02 gene classes ===
 M02A=$MITTAL/FEAT-Pol-II_RefPT-Sua7___SubFEAT-25C_M02a__150_SORT-Sua7occ
 M02B=$MITTAL/FEAT-Pol-II_RefPT-Sua7___SubFEAT-25C_M02b__150_SORT-Sua7occ
 H02A=$MITTAL/FEAT-Pol-II_RefPT-Sua7___SubFEAT-37C_H02a__150_SORT-Sua7occ
@@ -134,3 +127,59 @@ java -jar $SCRIPTMANAGER coordinate-manipulation expand-bed -c 1000 $H02A.bed -o
 java -jar $SCRIPTMANAGER coordinate-manipulation expand-bed -c 1000 $H02B.bed -o $H02B\_1000bp.bed
 
 #cut -f4 tmp_makerefs/Sua7_Mittal-M02a_sort-Sua7Taf2-ratio.bed Chitvan_BED/M02a_TFIIB_1000bp.bed |sort |uniq -c |awk '{print $1}'  |sort |uniq -c
+
+
+#===Build M03/H03 gene classes===
+echo Build M03/H03...
+
+# Get geneIDs of M02/H02 genes
+cut -f4 Sua7_M02_sort-Sua7Taf2-ratio.bed > M02.tab
+cut -f4 Sua7_H02_sort-Sua7Taf2-ratio.bed > H02.tab
+
+# Remove M02/H02 from top 1000 Sua7 occupied genes
+perl $FILTERL Sua7_STM-TFO-UNB_sort-Sua7-12275.bed M02.tab 3 remove Sua7_minusRP-minusM02_sort-Sua7-12275.bed
+perl $FILTERL Sua7_STM-TFO-UNB_sort-Sua7-26344.bed H02.tab 3 remove Sua7_minusRP-minusH02_sort-Sua7-26344.bed
+
+# Update with Spt7 scores
+perl $UPDATES Sua7_minusRP-minusM02_sort-Sua7-12275.bed <(cut -f4,5 $SPT7_MHS) Sua7_minusRP-minusM02_score-Spt7-11960.bed
+perl $UPDATES Sua7_minusRP-minusH02_sort-Sua7-26344.bed <(cut -f4,5 $SPT7_HS) Sua7_minusRP-minusH02_score-Spt7-20115.bed
+
+# Sort BED file by the Spt7 occupancy score
+perl $SORT Sua7_minusRP-minusM02_score-Spt7-11960.bed desc Sua7_minusRP-minusM02_sort-Spt7-11960.bed
+perl $SORT Sua7_minusRP-minusH02_score-Spt7-20115.bed desc Sua7_minusRP-minusH02_sort-Spt7-20115.bed
+
+# Shift upstream 250 bp
+#perl $SHIFT Sua7_top1000-minusM02_sort-Spt7-11960.bed -250
+
+# Pull M03/H03 classes
+head -n 300 Sua7_minusRP-minusM02_sort-Spt7-11960.bed > Sua7_M03_sort-Spt7-11960.bed
+head -n 300 Sua7_minusRP-minusH02_sort-Spt7-20115.bed > Sua7_H03_sort-Spt7-20115.bed
+
+# Final class labels
+head -n 150 Sua7_M03_sort-Spt7-11960.bed > Sua7_M03a_sort-Spt7-11960.bed
+tail -n 150 Sua7_M03_sort-Spt7-11960.bed > Sua7_M03b_sort-Spt7-11960.bed
+head -n 150 Sua7_H03_sort-Spt7-20115.bed > Sua7_H03a_sort-Spt7-20115.bed
+tail -n 150 Sua7_H03_sort-Spt7-20115.bed > Sua7_H03b_sort-Spt7-20115.bed
+
+# Update with Sua7 scores
+perl $UPDATES Sua7_M03a_sort-Spt7-11960.bed <(cut -f4,5 $SUA7_MHS) Sua7_M03a_score-Sua7-12275.bed
+perl $UPDATES Sua7_M03b_sort-Spt7-11960.bed <(cut -f4,5 $SUA7_MHS) Sua7_M03b_score-Sua7-12275.bed
+perl $UPDATES Sua7_H03a_sort-Spt7-20115.bed <(cut -f4,5 $SUA7_HS) Sua7_H03a_score-Sua7-26344.bed
+perl $UPDATES Sua7_H03b_sort-Spt7-20115.bed <(cut -f4,5 $SUA7_HS) Sua7_H03b_score-Sua7-26344.bed
+
+M03A=$MITTAL/FEAT-Pol-II_RefPT-Sua7___SubFEAT-25C_M03a__150_SORT-Sua7occ
+M03B=$MITTAL/FEAT-Pol-II_RefPT-Sua7___SubFEAT-25C_M03b__150_SORT-Sua7occ
+H03A=$MITTAL/FEAT-Pol-II_RefPT-Sua7___SubFEAT-37C_H03a__150_SORT-Sua7occ
+H03B=$MITTAL/FEAT-Pol-II_RefPT-Sua7___SubFEAT-37C_H03b__150_SORT-Sua7occ
+
+# Sort by Sua7 occupancy
+perl $SORT Sua7_M03a_score-Sua7-12275.bed desc $M03A.bed
+perl $SORT Sua7_M03b_score-Sua7-12275.bed desc $M03B.bed
+perl $SORT Sua7_H03a_score-Sua7-26344.bed desc $H03A.bed
+perl $SORT Sua7_H03b_score-Sua7-26344.bed desc $H03B.bed
+
+# Expand TFIIB/Sua7 coordinates to 1000bp
+java -jar $SCRIPTMANAGER coordinate-manipulation expand-bed -c 1000 $M03A.bed -o $M03A\_1000bp.bed
+java -jar $SCRIPTMANAGER coordinate-manipulation expand-bed -c 1000 $M03B.bed -o $M03B\_1000bp.bed
+java -jar $SCRIPTMANAGER coordinate-manipulation expand-bed -c 1000 $H03A.bed -o $H03A\_1000bp.bed
+java -jar $SCRIPTMANAGER coordinate-manipulation expand-bed -c 1000 $H03B.bed -o $H03B\_1000bp.bed
