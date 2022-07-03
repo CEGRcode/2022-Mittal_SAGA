@@ -109,7 +109,7 @@ do
 done
 
 #===Spt7===
-for SPT7 in "$DBAM/11960_Spt7_i5006_BY4741_-XO_FilteredBAM.bam" \
+for SPT7 in "$DBAM/11960_Spt7_i5006_BY4741_-_XO_FilteredBAM.bam" \
  "$DBAM/20115_Spt7_i5006_BY4741_-_XO_FilteredBAM.bam";
 do
 	ID=`basename $SPT7 ".bam" | awk -F"_" '{print $1}'`
