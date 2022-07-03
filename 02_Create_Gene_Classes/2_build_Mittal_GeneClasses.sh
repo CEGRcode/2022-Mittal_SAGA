@@ -13,8 +13,8 @@ TEMP=$WRK/tmp
 TSS=$ROSSI/TSS.bed
 SUA7_MHS=$TEMP/Sua7_sort-Sua7-12275-Offset-NormalizedCount.bed
 SUA7_HS=$TEMP/Sua7_sort-Sua7-26344-Offset-NormalizedCount.bed
-STM_MHS=$TEMP/STM_sort-Spt7-11960-Offset-NormalizedCount.bed
-STM_HS=$TEMP/STM_sort-Spt7-20115-Offset-NormalizedCount.bed
+SPT7_MHS=$TEMP/STM_sort-Spt7-11960-Offset-NormalizedCount.bed
+SPT7_HS=$TEMP/STM_sort-Spt7-20115-Offset-NormalizedCount.bed
 TAF2_MHS=$TEMP/Sua7_sort-Taf2-11846-Offset-NormalizedCount.bed
 TAF2_HS=$TEMP/Sua7_sort-Taf2-28736-Offset-NormalizedCount.bed
 
@@ -54,8 +54,8 @@ perl $FILTERL $SUA7_MHS 01-RP.tab 3 keep Sua7_RP_sort-Sua7-12275.bed
 perl $FILTERL $SUA7_HS 01-RP.tab 3 keep Sua7_RP_sort-Sua7-26344.bed
 
 # Update BED file with Spt7 occupancy score
-perl $UPDATES Sua7_RP_sort-Sua7-12275.bed <(cut -f4,5 $STM_MHS) Sua7_RP_score-Spt7-11960.bed
-perl $UPDATES Sua7_RP_sort-Sua7-26344.bed <(cut -f4,5 $STM_HS) Sua7_RP_score-Spt7-20115.bed
+perl $UPDATES Sua7_RP_sort-Sua7-12275.bed <(cut -f4,5 $SPT7_MHS) Sua7_RP_score-Spt7-11960.bed
+perl $UPDATES Sua7_RP_sort-Sua7-26344.bed <(cut -f4,5 $SPT7_HS) Sua7_RP_score-Spt7-20115.bed
 
 # Sort BED file by the occupancy score
 perl $SORT Sua7_RP_score-Spt7-11960.bed desc $MITTAL/Sua7_RP_sort-Spt7-11960.bed
@@ -81,13 +81,9 @@ grep -v 'YNR050C' Sua7_STM-TFO-UNB_sort-Sua7-26344-unfiltered.bed > Sua7_STM-TFO
 head -n 1000 Sua7_STM-TFO-UNB_sort-Sua7-12275.bed > Sua7_top1000_sort-Sua7-12275.bed
 head -n 1000 Sua7_STM-TFO-UNB_sort-Sua7-26344.bed > Sua7_top1000_sort-Sua7-26344.bed
 
-# Pull Taf2 occupancy scores
-cut -f4,5 $TAF2_MHS > Taf2-11846_occupancy.tab
-cut -f4,5 $TAF2_HS > Taf2-28736_occupancy.tab
-
 # Update with Taf2 scores
-perl $UPDATES Sua7_top1000_sort-Sua7-12275.bed Taf2-11846_occupancy.tab Sua7_top1000_score-Taf2-11846.bed
-perl $UPDATES Sua7_top1000_sort-Sua7-26344.bed Taf2-28736_occupancy.tab Sua7_top1000_score-Taf2-28736.bed
+perl $UPDATES Sua7_top1000_sort-Sua7-12275.bed <(cut -f4,5 $TAF2_MHS) Sua7_top1000_score-Taf2-11846.bed
+perl $UPDATES Sua7_top1000_sort-Sua7-26344.bed <(cut -f4,5 $TAF2_HS) Sua7_top1000_score-Taf2-28736.bed
 
 # Calculate Sua7/Taf2 ratio
 perl $RATIO Sua7_top1000_sort-Sua7-12275.bed Sua7_top1000_score-Taf2-11846.bed Sua7_top1000_score-Sua7Taf2-ratio-MHS.bed
@@ -107,15 +103,11 @@ tail -n 150 Sua7_M02_sort-Sua7Taf2-ratio.bed > Sua7_M02b_sort-Sua7Taf2-ratio.bed
 head -n 150 Sua7_H02_sort-Sua7Taf2-ratio.bed > Sua7_H02a_sort-Sua7Taf2-ratio.bed
 tail -n 150 Sua7_H02_sort-Sua7Taf2-ratio.bed > Sua7_H02b_sort-Sua7Taf2-ratio.bed
 
-# Pull Sua7 occupancy scores
-cut -f4,5 $SUA7_MHS > Sua7-12275_occupancy.tab
-cut -f4,5 $SUA7_HS > Sua7-26344_occupancy.tab
-
 # Update with Sua7 scores
-perl $UPDATES Sua7_M02a_sort-Sua7Taf2-ratio.bed Sua7-12275_occupancy.tab Sua7_M02a_score-Sua7-12275.bed
-perl $UPDATES Sua7_M02b_sort-Sua7Taf2-ratio.bed Sua7-12275_occupancy.tab Sua7_M02b_score-Sua7-12275.bed
-perl $UPDATES Sua7_H02a_sort-Sua7Taf2-ratio.bed Sua7-26344_occupancy.tab Sua7_H02a_score-Sua7-26344.bed
-perl $UPDATES Sua7_H02b_sort-Sua7Taf2-ratio.bed Sua7-26344_occupancy.tab Sua7_H02b_score-Sua7-26344.bed
+perl $UPDATES Sua7_M02a_sort-Sua7Taf2-ratio.bed <(cut -f4,5 $SUA7_MHS) Sua7_M02a_score-Sua7-12275.bed
+perl $UPDATES Sua7_M02b_sort-Sua7Taf2-ratio.bed <(cut -f4,5 $SUA7_MHS) Sua7_M02b_score-Sua7-12275.bed
+perl $UPDATES Sua7_H02a_sort-Sua7Taf2-ratio.bed <(cut -f4,5 $SUA7_HS) Sua7_H02a_score-Sua7-26344.bed
+perl $UPDATES Sua7_H02b_sort-Sua7Taf2-ratio.bed <(cut -f4,5 $SUA7_HS) Sua7_H02b_score-Sua7-26344.bed
 
 
 #M02A=Sua7_M02a_sort-Sua7Taf2-ratio
@@ -142,45 +134,3 @@ java -jar $SCRIPTMANAGER coordinate-manipulation expand-bed -c 1000 $H02A.bed -o
 java -jar $SCRIPTMANAGER coordinate-manipulation expand-bed -c 1000 $H02B.bed -o $H02B\_1000bp.bed
 
 #cut -f4 tmp_makerefs/Sua7_Mittal-M02a_sort-Sua7Taf2-ratio.bed Chitvan_BED/M02a_TFIIB_1000bp.bed |sort |uniq -c |awk '{print $1}'  |sort |uniq -c
-
-
-#===Write M02/H02 with Nucleosome RefPT===
-REFPT_NUC=$ROSSI/Nuc.bed
-
-NM02A=$MITTAL/FEAT-Pol-II_RefPT+1Nuc___SubFEAT-25C_M02a__150_SORT-Sua7occ
-NM02B=$MITTAL/FEAT-Pol-II_RefPT+1Nuc___SubFEAT-25C_M02b__150_SORT-Sua7occ
-NH02A=$MITTAL/FEAT-Pol-II_RefPT+1Nuc___SubFEAT-37C_H02a__150_SORT-Sua7occ
-NH02B=$MITTAL/FEAT-Pol-II_RefPT+1Nuc___SubFEAT-37C_H02b__150_SORT-Sua7occ
-
-# Get Nuc RefPT
-perl $UPDATEC $M02A.bed $REFPT_NUC $NM02A.bed
-perl $UPDATEC $M02B.bed $REFPT_NUC $NM02B.bed
-perl $UPDATEC $H02A.bed $REFPT_NUC $NH02A.bed
-perl $UPDATEC $H02B.bed $REFPT_NUC $NH02B.bed
-
-#  Expand BED 200bp from center
-java -jar $SCRIPTMANAGER coordinate-manipulation expand-bed -c 100 $NM02A.bed -o $NM02A\_1000bp.bed
-java -jar $SCRIPTMANAGER coordinate-manipulation expand-bed -c 100 $NM02B.bed -o $NM02B\_1000bp.bed
-java -jar $SCRIPTMANAGER coordinate-manipulation expand-bed -c 100 $NH02A.bed -o $NH02A\_1000bp.bed
-java -jar $SCRIPTMANAGER coordinate-manipulation expand-bed -c 100 $NH02B.bed -o $NH02B\_1000bp.bed
-
-
-#===Write M02/H02 with Upstream Activation Sequence (UAS) RefPT===
-REFPT_UAS=$ROSSI/STM.bed
-
-UM02A=$MITTAL/FEAT-Pol-II_RefPT-UAS___SubFEAT-25C_M02a__150_SORT-Sua7occ
-UM02B=$MITTAL/FEAT-Pol-II_RefPT-UAS___SubFEAT-25C_M02b__150_SORT-Sua7occ
-UH02A=$MITTAL/FEAT-Pol-II_RefPT-UAS___SubFEAT-37C_H02a__150_SORT-Sua7occ
-UH02B=$MITTAL/FEAT-Pol-II_RefPT-UAS___SubFEAT-37C_H02b__150_SORT-Sua7occ
-
-# Get UAS RefPT
-perl $UPDATEC $M02A.bed $REFPT_UAS $UM02A.bed
-perl $UPDATEC $M02B.bed $REFPT_UAS $UM02B.bed
-perl $UPDATEC $H02A.bed $REFPT_UAS $UH02A.bed
-perl $UPDATEC $H02B.bed $REFPT_UAS $UH02B.bed
-
-#  Expand BED 200bp from center
-java -jar $SCRIPTMANAGER coordinate-manipulation expand-bed -c 100 $UM02A.bed -o $UM02A\_1000bp.bed
-java -jar $SCRIPTMANAGER coordinate-manipulation expand-bed -c 100 $UM02B.bed -o $UM02B\_1000bp.bed
-java -jar $SCRIPTMANAGER coordinate-manipulation expand-bed -c 100 $UH02A.bed -o $UH02A\_1000bp.bed
-java -jar $SCRIPTMANAGER coordinate-manipulation expand-bed -c 100 $UH02B.bed -o $UH02B\_1000bp.bed
