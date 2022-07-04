@@ -188,14 +188,36 @@ java -jar $SCRIPTMANAGER coordinate-manipulation expand-bed -c 1000 $H03B.bed -o
 #===Build M04/H04 gene classes===
 echo Build M04/H04...
 
-M04=$MITTAL/FEAT-Pol-II_RefPT-Sua7___SubFEAT-25C_M04__150_SORT-Sua7occ.bed
-H04=$MITTAL/FEAT-Pol-II_RefPT-Sua7___SubFEAT-37C_H04__150_SORT-Sua7occ.bed
+M04=$MITTAL/FEAT-Pol-II_RefPT-Sua7___SubFEAT-25C_M04__150_SORT-Sua7occ
+H04=$MITTAL/FEAT-Pol-II_RefPT-Sua7___SubFEAT-37C_H04__150_SORT-Sua7occ
 
-HEAD_CT=`wc -l Sua7_minusRP-minusH02_sort-Spt7-20115.bed | awk '{print $1/2+75}'`
+# Get geneIDs of M03/H03 genes
+cut -f4 Sua7_M03_sort-Spt7-11960.bed > M03.tab
+cut -f4 Sua7_H03_sort-Spt7-20115.bed > H03.tab
+
+# Remove M03/H03 from minusRP-minusM/H02 set
+perl $FILTERL Sua7_minusRP-minusM02_sort-Sua7-12275.bed M03.tab 3 remove Sua7_minusRP-minusM02-minusM03_sort-Sua7-12275.bed
+perl $FILTERL Sua7_minusRP-minusH02_sort-Sua7-26344.bed H03.tab 3 remove Sua7_minusRP-minusH02-minusH03_sort-Sua7-26344.bed
+
+# Update with Taf2 scores
+perl $UPDATES Sua7_minusRP-minusM02-minusM03_sort-Sua7-12275.bed <(cut -f4,5 $TAF2_MHS) Sua7_minusRP-minusM02-minusM03_score-Taf2-11846.bed
+perl $UPDATES Sua7_minusRP-minusH02-minusH03_sort-Sua7-26344.bed <(cut -f4,5 $TAF2_HS) Sua7_minusRP-minusH02-minusH03_score-Taf2-28736.bed
+
+# Calculate Sua7/Taf2 ratio
+perl $RATIO Sua7_minusRP-minusM02-minusM03_sort-Sua7-12275.bed Sua7_minusRP-minusM02-minusM03_score-Taf2-11846.bed Sua7_minusRP-minusM02-minusM03_score-Sua7Taf2-ratio-MHS.bed
+perl $RATIO Sua7_minusRP-minusH02-minusH03_sort-Sua7-26344.bed Sua7_minusRP-minusH02-minusH03_score-Taf2-11846.bed Sua7_minusRP-minusH02-minusH03_score-Sua7Taf2-ratio-HS.bed
+
+# Sort BED file by the ratio score
+perl $SORT Sua7_minusRP-minusM02-minusM03_score-Sua7Taf2-ratio-MHS.bed desc Sua7_minusRP-minusM02-minusM03_sort-Sua7Taf2-ratio-MHS.bed
+perl $SORT Sua7_minusRP-minusH02-minusH03_score-Sua7Taf2-ratio-HS.bed desc Sua7_minusRP-minusH02-minusH03_sort-Sua7Taf2-ratio-HS.bed
+
+# Get 75 (150/2) offset of middle row index 
+MHS_CT=`wc -l Sua7_minusRP-minusM02-minusM03_sort-Sua7Taf2-ratio-MHS.bed | awk '{print $1/2+75}'`
+HS_CT=`wc -l Sua7_minusRP-minusH02-minusH03_sort-Sua7Taf2-ratio-HS.bed | awk '{print $1/2+75}'`
 
 # Pull M04/H04 classes from middle
-head -n $HEAD_CT Sua7_minusRP-minusM02_sort-Spt7-11960.bed | tail -n 150 > $M04.bed
-head -n $HEAD_CT Sua7_minusRP-minusH02_sort-Spt7-20115.bed | tail -n 150 > $H04.bed
+head -n $MHS_CT Sua7_minusRP-minusM02-minusM03_sort-Sua7Taf2-ratio-MHS.bed | tail -n 150 > $M04.bed
+head -n $HS_CT Sua7_minusRP-minusH02-minusH03_sort-Sua7Taf2-ratio-HS.bed | tail -n 150 > $H04.bed
 
 # Expand TFIIB/Sua7 coordinates to 1000bp
 java -jar $SCRIPTMANAGER coordinate-manipulation expand-bed -c 1000 $M04.bed -o $M04\_1000bp.bed
