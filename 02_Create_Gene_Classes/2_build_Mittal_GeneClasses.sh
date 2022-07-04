@@ -205,13 +205,13 @@ perl $UPDATES Sua7_minusRP-minusH02-minusH03_sort-Sua7-26344.bed <(cut -f4,5 $TA
 
 # Calculate Sua7/Taf2 ratio
 perl $RATIO Sua7_minusRP-minusM02-minusM03_sort-Sua7-12275.bed Sua7_minusRP-minusM02-minusM03_score-Taf2-11846.bed Sua7_minusRP-minusM02-minusM03_score-Sua7Taf2-ratio-MHS.bed
-perl $RATIO Sua7_minusRP-minusH02-minusH03_sort-Sua7-26344.bed Sua7_minusRP-minusH02-minusH03_score-Taf2-11846.bed Sua7_minusRP-minusH02-minusH03_score-Sua7Taf2-ratio-HS.bed
+perl $RATIO Sua7_minusRP-minusH02-minusH03_sort-Sua7-26344.bed Sua7_minusRP-minusH02-minusH03_score-Taf2-28736.bed Sua7_minusRP-minusH02-minusH03_score-Sua7Taf2-ratio-HS.bed
 
 # Sort BED file by the ratio score
 perl $SORT Sua7_minusRP-minusM02-minusM03_score-Sua7Taf2-ratio-MHS.bed desc Sua7_minusRP-minusM02-minusM03_sort-Sua7Taf2-ratio-MHS.bed
 perl $SORT Sua7_minusRP-minusH02-minusH03_score-Sua7Taf2-ratio-HS.bed desc Sua7_minusRP-minusH02-minusH03_sort-Sua7Taf2-ratio-HS.bed
 
-# Get 75 (150/2) offset of middle row index 
+# Get 75 (150/2) offset of middle row index
 MHS_CT=`wc -l Sua7_minusRP-minusM02-minusM03_sort-Sua7Taf2-ratio-MHS.bed | awk '{print $1/2+75}'`
 HS_CT=`wc -l Sua7_minusRP-minusH02-minusH03_sort-Sua7Taf2-ratio-HS.bed | awk '{print $1/2+75}'`
 
