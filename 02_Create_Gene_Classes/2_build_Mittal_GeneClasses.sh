@@ -222,3 +222,17 @@ head -n $HS_CT Sua7_minusRP-minusH02-minusH03_sort-Sua7Taf2-ratio-HS.bed | tail 
 # Expand TFIIB/Sua7 coordinates to 1000bp
 java -jar $SCRIPTMANAGER coordinate-manipulation expand-bed -c 1000 $M04.bed -o $M04\_1000bp.bed
 java -jar $SCRIPTMANAGER coordinate-manipulation expand-bed -c 1000 $H04.bed -o $H04\_1000bp.bed
+
+
+#===Build Induced (H02aNotM02ab) gene classes===
+echo Build Induced\(H02aNotM02ab\)...
+
+# Remove M02ab from H02a gene set
+perl $FILTERL $H02A.bed <(cut -f4 $M02A.bed $M02B.bed) 3 remove temp_H02aNotM02ab.bed
+LN_CT=`wc -l temp_H02aNotM02ab.bed |awk '{print $1}'`
+
+H02ANOTM02AB=$MITTAL/FEAT-Pol-II_RefPT-Sua7___SubFEAT_Induced__$LN_CT\_SORT-Sua7occ
+mv temp_H02aNotM02ab.bed $H02ANOTM02AB.bed
+
+# Expand Induced coordinates to 1000bp
+java -jar $SCRIPTMANAGER coordinate-manipulation expand-bed -c 1000 $H02ANOTM02AB.bed -o $H02ANOTM02AB\_1000bp.bed
