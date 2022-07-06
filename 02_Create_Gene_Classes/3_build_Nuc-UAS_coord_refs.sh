@@ -51,17 +51,17 @@ perl $UPDATEC $H04.bed $REFPT_NUC $NH04.bed
 perl $UPDATEC $H02ANOTM02AB.bed $REFPT_NUC $NH02ANOTM02AB.bed
 
 #  Expand BED 200bp from center
-java -jar $SCRIPTMANAGER coordinate-manipulation expand-bed -c 100 $NM02A.bed -o $NM02A\_1000bp.bed
-java -jar $SCRIPTMANAGER coordinate-manipulation expand-bed -c 100 $NM02B.bed -o $NM02B\_1000bp.bed
-java -jar $SCRIPTMANAGER coordinate-manipulation expand-bed -c 100 $NM03A.bed -o $NM03A\_1000bp.bed
-java -jar $SCRIPTMANAGER coordinate-manipulation expand-bed -c 100 $NM03B.bed -o $NM03B\_1000bp.bed
-java -jar $SCRIPTMANAGER coordinate-manipulation expand-bed -c 100 $NM04.bed -o $NM04\_1000bp.bed
-java -jar $SCRIPTMANAGER coordinate-manipulation expand-bed -c 100 $NH02A.bed -o $NH02A\_1000bp.bed
-java -jar $SCRIPTMANAGER coordinate-manipulation expand-bed -c 100 $NH02B.bed -o $NH02B\_1000bp.bed
-java -jar $SCRIPTMANAGER coordinate-manipulation expand-bed -c 100 $NH03A.bed -o $NH03A\_1000bp.bed
-java -jar $SCRIPTMANAGER coordinate-manipulation expand-bed -c 100 $NH03B.bed -o $NH03B\_1000bp.bed
-java -jar $SCRIPTMANAGER coordinate-manipulation expand-bed -c 100 $NH04.bed -o $NH04\_1000bp.bed
-java -jar $SCRIPTMANAGER coordinate-manipulation expand-bed -c 100 $NH02ANOTM02AB.bed -o $NH02ANOTM02AB\_1000bp.bed
+java -jar $SCRIPTMANAGER coordinate-manipulation expand-bed -c 1000 $NM02A.bed -o $NM02A\_1000bp.bed
+java -jar $SCRIPTMANAGER coordinate-manipulation expand-bed -c 1000 $NM02B.bed -o $NM02B\_1000bp.bed
+java -jar $SCRIPTMANAGER coordinate-manipulation expand-bed -c 1000 $NM03A.bed -o $NM03A\_1000bp.bed
+java -jar $SCRIPTMANAGER coordinate-manipulation expand-bed -c 1000 $NM03B.bed -o $NM03B\_1000bp.bed
+java -jar $SCRIPTMANAGER coordinate-manipulation expand-bed -c 1000 $NM04.bed -o $NM04\_1000bp.bed
+java -jar $SCRIPTMANAGER coordinate-manipulation expand-bed -c 1000 $NH02A.bed -o $NH02A\_1000bp.bed
+java -jar $SCRIPTMANAGER coordinate-manipulation expand-bed -c 1000 $NH02B.bed -o $NH02B\_1000bp.bed
+java -jar $SCRIPTMANAGER coordinate-manipulation expand-bed -c 1000 $NH03A.bed -o $NH03A\_1000bp.bed
+java -jar $SCRIPTMANAGER coordinate-manipulation expand-bed -c 1000 $NH03B.bed -o $NH03B\_1000bp.bed
+java -jar $SCRIPTMANAGER coordinate-manipulation expand-bed -c 1000 $NH04.bed -o $NH04\_1000bp.bed
+java -jar $SCRIPTMANAGER coordinate-manipulation expand-bed -c 1000 $NH02ANOTM02AB.bed -o $NH02ANOTM02AB\_1000bp.bed
 
 
 #===Write M02/H02 with Upstream Activation Sequence (UAS) RefPT===
@@ -93,14 +93,14 @@ perl $UPDATEC $H04.bed $REFPT_UAS $UH04.bed
 perl $UPDATEC $H02ANOTM02AB.bed $REFPT_UAS $UH02ANOTM02AB.bed
 
 #  Expand BED 200bp from center
-java -jar $SCRIPTMANAGER coordinate-manipulation expand-bed -c 100 $UM02A.bed -o $UM02A\_1000bp.bed
-java -jar $SCRIPTMANAGER coordinate-manipulation expand-bed -c 100 $UM02B.bed -o $UM02B\_1000bp.bed
-java -jar $SCRIPTMANAGER coordinate-manipulation expand-bed -c 100 $UM03A.bed -o $UM03A\_1000bp.bed
-java -jar $SCRIPTMANAGER coordinate-manipulation expand-bed -c 100 $UM03B.bed -o $UM03B\_1000bp.bed
-java -jar $SCRIPTMANAGER coordinate-manipulation expand-bed -c 100 $UM04.bed -o $UM04\_1000bp.bed
-java -jar $SCRIPTMANAGER coordinate-manipulation expand-bed -c 100 $UH02A.bed -o $UH02A\_1000bp.bed
-java -jar $SCRIPTMANAGER coordinate-manipulation expand-bed -c 100 $UH02B.bed -o $UH02B\_1000bp.bed
-java -jar $SCRIPTMANAGER coordinate-manipulation expand-bed -c 100 $UH03A.bed -o $UH03A\_1000bp.bed
-java -jar $SCRIPTMANAGER coordinate-manipulation expand-bed -c 100 $UH03B.bed -o $UH03B\_1000bp.bed
-java -jar $SCRIPTMANAGER coordinate-manipulation expand-bed -c 100 $UH04.bed -o $UH04\_1000bp.bed
-java -jar $SCRIPTMANAGER coordinate-manipulation expand-bed -c 100 $UH02ANOTM02AB.bed -o $UH02ANOTM02AB\_1000bp.bed
+java -jar $SCRIPTMANAGER coordinate-manipulation expand-bed -c 1000 $UM02A.bed -o $UM02A\_1000bp.bed
+java -jar $SCRIPTMANAGER coordinate-manipulation expand-bed -c 1000 $UM02B.bed -o $UM02B\_1000bp.bed
+java -jar $SCRIPTMANAGER coordinate-manipulation expand-bed -c 1000 $UM03A.bed -o $UM03A\_1000bp.bed
+java -jar $SCRIPTMANAGER coordinate-manipulation expand-bed -c 1000 $UM03B.bed -o $UM03B\_1000bp.bed
+java -jar $SCRIPTMANAGER coordinate-manipulation expand-bed -c 1000 $UM04.bed -o $UM04\_1000bp.bed
+java -jar $SCRIPTMANAGER coordinate-manipulation expand-bed -c 1000 $UH02A.bed -o $UH02A\_1000bp.bed
+java -jar $SCRIPTMANAGER coordinate-manipulation expand-bed -c 1000 $UH02B.bed -o $UH02B\_1000bp.bed
+java -jar $SCRIPTMANAGER coordinate-manipulation expand-bed -c 1000 $UH03A.bed -o $UH03A\_1000bp.bed
+java -jar $SCRIPTMANAGER coordinate-manipulation expand-bed -c 1000 $UH03B.bed -o $UH03B\_1000bp.bed
+java -jar $SCRIPTMANAGER coordinate-manipulation expand-bed -c 1000 $UH04.bed -o $UH04\_1000bp.bed
+java -jar $SCRIPTMANAGER coordinate-manipulation expand-bed -c 1000 $UH02ANOTM02AB.bed -o $UH02ANOTM02AB\_1000bp.bed
