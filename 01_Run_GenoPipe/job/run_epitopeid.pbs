@@ -3,8 +3,8 @@
 #PBS -l pmem=14gb
 #PBS -l walltime=24:00:00
 #PBS -A my-allocation
-#PBS -o run_epitopeid.log.out
-#PBS -e run_epitopeid.log.err
+#PBS -o logs/run_epitopeid.log.out
+#PBS -e logs/run_epitopeid.log.err
 
 module load gcc
 module load samtools

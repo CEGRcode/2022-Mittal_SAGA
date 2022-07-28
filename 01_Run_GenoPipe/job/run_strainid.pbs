@@ -3,8 +3,8 @@
 #PBS -l pmem=14gb
 #PBS -l walltime=24:00:00
 #PBS -A my-allocation
-#PBS -o run_strainid.log.out
-#PBS -e run_strainid.log.err
+#PBS -o logs/run_strainid.log.out
+#PBS -e logs/run_strainid.log.err
 
 module load gcc
 module load samtools
@@ -15,7 +15,7 @@ source activate mittal
 WRK=/path/to/2022-Mittal_SAGA/
 GENOME=/path/to/sacCer3.fa
 STRAINID=/path/to/GenoPipe/StrainID
-OUTPUT=$WRK/01_Run_GenoPipe/epitopeid
+OUTPUT=$WRK/01_Run_GenoPipe/strainid
 
 cd $WRK
 [ -d logs ] || mkdir logs
