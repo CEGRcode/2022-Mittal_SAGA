@@ -1,0 +1,33 @@
+#!/bin/bash
+#PBS -l nodes=1:ppn=4
+#PBS -l pmem=14gb
+#PBS -l walltime=01:00:00
+#PBS -A open
+#PBS -o logs/make_excel.log.out
+#PBS -e logs/make_excel.log.err
+
+module load gcc
+module load samtools
+module load anaconda3
+source activate mittal
+
+# Compile composites from bulk_cross.pbs into a formatted Excel table
+
+# Fill in placeholder constants with your directories
+WRK=/path/to/2022_Mittal
+BEDDIR=$WRK/data/RefPT-Mittal
+LIBRARY=$WRK/LIBRARY
+
+# Script shortcuts
+EXCEL=$WRK/bin/make_excel_composite_v2.py
+
+cd $WRK
+
+# Process BAM file for each BED file in directory
+for BEDFILE in `ls $BEDDIR/*1000bp.bed`;
+do
+	echo $BEDFILE
+	BED=`basename $BEDFILE ".bed"`
+	DIR=$LIBRARY/$BED
+	python $EXCEL -i $DIR/NormComposites/ -o $DIR/$BED\_Composites.xlsx
+done
