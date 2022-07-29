@@ -45,7 +45,6 @@ fi
 
 ##--------Build Reference files for 5376 gene feaures (YEP)--------
 
-FILTERV=$BIN/filter_BED_by_value_ColumnSelect.pl
 #===+1 Nucleosome===
 # Pull +1Nuc coordinates with Sua7 occ from Rossi Supplementary Table 1 (5873 genes)
 sed 1d $YEPTABLE \
@@ -73,6 +72,10 @@ sed 1d $YEPTABLE \
   | awk '{FS="\t"}{OFS="\t"}{print $1,$15,$15,$7,$4,$2}' \
   | head -n 5378 \
   > TSS.bed
+
+#===TSS_shifted===
+perl $SHIFT TSS.bed 250 TSS+250.bed
+java -jar $SCRIPTMANAGER coordinate-manipulation expand-bed TSS+250.bed -c 500 -o TSS_0-500.bed
 
 #===Sua7===
 # Associate TSS to a Sua7 ChexMix peak (downloaded from Rossi 2021 Github)
@@ -123,7 +126,7 @@ java -jar $SCRIPTMANAGER coordinate-manipulation expand-bed ElevenK_features_Sua
 #===STM===
 # Create STM ref in STable 1 feature order
 perl $UPDATEC TSS.bed STM.bed $ELEVENK\_STM_core5378.bed
-# Use TSS ref and shift by 
+# Use TSS ref and shift by
 perl $SHIFT $ELEVENK\_TSS_subtract5378.bed -150 $ELEVENK\_TSS-shiftedby$SHIFT_BP\_subtract5378.bed
 # Merge 5378 ordered genes and rest of 11k
 cat $ELEVENK\_STM_core5378.bed $ELEVENK\_TSS-shiftedby$SHIFT_BP\_subtract5378.bed > ElevenK_features_STM.bed
