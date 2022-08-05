@@ -155,10 +155,11 @@ do
 	BED=`basename $BEDFILE ".bed"`
 	DIR=$OUTDIR/$BED
 	[ -d $DIR ] || mkdir $DIR
-	if [ $TYPE == "H2B" ] || [ $TYPE == "H2BK123ub" ] || [ $TYPE == "H3" ] || [ $TYPE == "H3K14ac" ] || [ $TYPE == "H3K9ac" ] \
-		|| [ $TYPE == "H3K36me3" ] || [ $TYPE == "H3K27ac" ] || [ $TYPE == "H3K4me3" ] || [ $TYPE == "H3K79me3" ] \
-		|| [ $TYPE == "H4K12ac" ];
-	then
+	if [ $TYPE == "H2B" ] || [ $TYPE == "H2BK123ub" ] || [ $TYPE == "H2AZ" ] || \
+	    [ $TYPE == "H3" ] || [ $TYPE == "H3K4me3" ] || [ $TYPE == "H3K9ac" ] || [ $TYPE == "H3K9me2" ] || [ $TYPE == "H3K9me3" ] || [ $TYPE == "H3K14ac" ] || \
+	    [ $TYPE == "H3K27ac" ] || [ $TYPE == "H3K36me3" ] || [ $TYPE == "H3K79me3" ] || \
+	    [ $TYPE == "H4"] || [ $TYPE == "H4R3me2" ] || [ $TYPE == "H4K8ac" ] || [ $TYPE == "H4K12ac" ] || [ $TYPE == "H4K16ac" ] || [ $TYPE == "H4K20me1" ];
+then
 		#echo "Skip Nucleosome"
 		echo "Run Nucleosome"
 		BASE=$BAM\_$BED\_read1
