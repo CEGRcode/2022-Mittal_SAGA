@@ -1,6 +1,6 @@
 #! /usr/bin/perl/
 
-die "usage: perl shift_BED_center.pl BED_File\tShift(bp) [- = upstream, + = downstream]\tOutput_File\n" unless $#ARGV == 2;
+die "usage:\t\tperl shift_BED_center.pl\tBED_File\tShift(bp) [- = upstream, + = downstream]\tOutput_File\n" unless $#ARGV == 2;
 my($input, $SHIFT, $output) = @ARGV;
 open(IN, "<$input") or die "Can't open $input for reading!\n";
 open(OUT, ">$output") or die "Can't open $output for reading!\n";

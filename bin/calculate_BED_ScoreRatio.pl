@@ -1,6 +1,6 @@
 #! /usr/bin/perl
 
-die "usage: perl calculate_BED_ScoreRatio.pl Numerator_BED_File\tDenominator_BED_File\tOutput_BED\nBED information inherited from numerator BED file\n" unless $#ARGV == 2;
+die "usage:\t\tperl calculate_BED_ScoreRatio.pl\tNumerator_BED_File\tDenominator_BED_File\tOutput_BED\nExample:\tperl calculate_BED_ScoreRatio.pl numerator.bed denominator.bed ratio.bed\n\tBED information inherited from numerator BED file\n" unless $#ARGV == 2;
 my($bed1, $bed2, $output) = @ARGV;
 
 $linecount1 = 0;
@@ -42,7 +42,7 @@ while($line1 = <BED1>) {
 	$line2 = <BED2>;
 	chomp($line1);
 	chomp($line2);
-	
+
         next if((substr $line1, 0, 1) eq "#");
         next if((substr $line2, 0, 1) eq "#");
 

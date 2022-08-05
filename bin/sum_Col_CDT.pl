@@ -2,7 +2,7 @@
 
 # Make composite file from CDT
 
-die "usage: perl sum_Col_CDT.pl Input_CDT_File\tOutput_TAB_File\n" unless $#ARGV == 1;
+die "usage:\t\tperl sum_Col_CDT.pl\tInput_CDT_File\tOutput_TAB_File\nExample:\tperl sum_Col_CDT.pl input.cdt composite.out\n" unless $#ARGV == 1;
 my($input, $output) = @ARGV;
 open(IN, "<$input") or die "Can't open $input for reading!\n";
 open(OUT, ">$output") or die "Can't open $output for reading!\n";

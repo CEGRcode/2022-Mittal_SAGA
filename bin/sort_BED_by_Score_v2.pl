@@ -1,6 +1,6 @@
 #! /usr/bin/perl
 
-die "usage:\t\tperl sort_BED_by_Score_v2.pl BED_File\tdesc/asc (desc = high->low, asc = low->high\tOutput_BED\nExample:\tperl sort_BED_by_Score_v2.pl input.bed asc output.bed\n" unless $#ARGV == 2;
+die "usage:\t\tperl sort_BED_by_Score_v2.pl\tBED_File\tdesc/asc (desc = high->low, asc = low->high\tOutput_BED\nExample:\tperl sort_BED_by_Score_v2.pl input.bed asc output.bed\n" unless $#ARGV == 2;
 my($input, $ORDER, $output) = @ARGV;
 
 if($ORDER ne "desc" && $ORDER ne "asc") {

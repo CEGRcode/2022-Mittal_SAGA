@@ -1,6 +1,6 @@
 #! /usr/bin/perl
 
-die "usage: perl update_BED_score_with_TAB_score.pl BED_File (to be updated)\tTAB_File (output from sum_Row_CDT.pl)\tOutput_BED\n" unless $#ARGV == 2;
+die "usage:\t\tperl update_BED_score_with_TAB_score.pl\tBED_File (to be updated)\tTAB_File (output from sum_Row_CDT.pl)\tOutput_BED\nExample:\tperl update_BED_score_with_TAB_score.pl input.bed ref.tab output.bed\n" unless $#ARGV == 2;
 my($bed, $cdt, $output) = @ARGV;
 
 %SCORE = ();
@@ -45,4 +45,3 @@ while($line = <BED>) {
 }
 close BED;
 close OUT;
-

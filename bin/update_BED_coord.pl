@@ -1,6 +1,6 @@
 #! /usr/bin/perl
 
-die "usage: perl update_BED_coord.pl BED_File (to be updated)\tBED_File (master list)\tOutput_BED\n" unless $#ARGV == 2;
+die "usage:\t\tperl update_BED_coord.pl\tBED_File (to be updated)\tBED_File (master list)\tOutput_BED\nExample:\tperl update_BED_coord.pl input.bed master.bed output.bed\n" unless $#ARGV == 2;
 my($bed1, $bed2, $output) = @ARGV;
 
 %COORD = ();

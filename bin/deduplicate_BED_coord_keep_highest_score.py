@@ -4,10 +4,7 @@ import argparse
 
 usage = """
 Usage:
-This script takes a peak BED and BAM file and tallies up an occupancy score of the tags in a strand-specific manner (to take advantage of XO profile).
--Tags mapping to sense strand are tallied in a +/-100bp window around the point -36bp (upstream) of the peak BED midpoint.
--Tags mappint to anti strand are tallied +/-100bp window around the point +36bp (downstream) of the peak BED midpoint.
--Sense Tags + Anti Tags = occupancy score replaced in peak BED file for output
+This script copies a BED coordinate file over to output while identifying duplicate coodinate entries and prints only the coordinate with the smallest absolute value in the score column to output.
 
 Example: python deduplicate_BED_coord_keep_highest_score.py -i PEAK.bed -b NGS.bam -o PEAK_wscore.bed
 """
@@ -16,7 +13,7 @@ ALL_NT = ["A","T","C","G"]
 
 def getParams():
 	'''Parse parameters from the command line'''
-	parser = argparse.ArgumentParser(description='This script takes a BED with a distance score and keeps the entry prioritizing upstream distances, then by closest distance.')
+	parser = argparse.ArgumentParser(description='This script copies a BED coordinate file over to output while identifying duplicate coodinate entries and prints only the coordinate with the smallest absolute value in the score column to output.')
 	parser.add_argument('-i','--input', metavar='bedfile', required=True, help='a BED file of coords to uniq (keep smallest absolute score)')
 	parser.add_argument('-o','--output', metavar='outfile', required=True, help='a BED file of deduplicated entries')
 

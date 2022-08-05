@@ -1,6 +1,6 @@
 #! /usr/bin/perl
 
-die "BED_File\tRef_BED_File\tOutput_File\n" unless $#ARGV == 2;
+die "usage:\t\tperl determine_closest_RefPoint_output_Both.pl\tBED_File\tRef_BED_File\tOutput_File\nExample:\tperl determine_closest_RefPoint_output_Both.pl input.bed ref.bed output.bed\n" unless $#ARGV == 2;
 my($input, $ref, $output) = @ARGV;
 
 #chr1	9260	9261	ST3635	0	-
@@ -41,7 +41,7 @@ while($line = <IN>) {
 	if($closestIndex == -1) {
                 print OUT $line,"\tNaN\tNaN\tNaN\tNaN\tNaN\tNaN\tNaN\n";
 
-	} else { 
+	} else {
 		print OUT $line,"\t",$REF_COORD[$closestIndex]{'line'},"\t",$trueDIST,"\n";
 	}
 }
