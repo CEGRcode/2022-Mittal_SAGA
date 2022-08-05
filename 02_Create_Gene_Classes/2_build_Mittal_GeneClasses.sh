@@ -136,7 +136,7 @@ echo Build M03/H03...
 cut -f4 Sua7_M02_sort-Sua7Taf2-ratio.bed > M02.tab
 cut -f4 Sua7_H02_sort-Sua7Taf2-ratio.bed > H02.tab
 
-# Remove M02/H02 from top 1000 Sua7 occupied genes
+# Remove M02/H02 from 5378 minus RP genes
 perl $FILTERL Sua7_STM-TFO-UNB_sort-Sua7-12275.bed M02.tab 3 remove Sua7_minusRP-minusM02_sort-Sua7-12275.bed
 perl $FILTERL Sua7_STM-TFO-UNB_sort-Sua7-26344.bed H02.tab 3 remove Sua7_minusRP-minusH02_sort-Sua7-26344.bed
 
