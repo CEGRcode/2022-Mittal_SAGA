@@ -26,6 +26,7 @@ SCRIPTMANAGER=$BIN/ScriptManager-v0.13.jar
 CLOSEST=$BIN/determine_closest_RefPoint_output_Both.pl
 DEDUPLICATE=$BIN/deduplicate_BED_coord_keep_highest_score.py
 FILTERL=$BIN/filter_BED_by_list_ColumnSelect.pl
+FILTERS=$BIN/filter_BED_by_string_ColumnSelect.pl
 FILTERV=$BIN/filter_BED_by_value_ColumnSelect.pl
 SHIFT=$BIN/shift_BED_center_v2.pl
 SORT=$BIN/sort_BED_by_Score_v2.pl
@@ -96,9 +97,50 @@ awk '{FS="\t"}{OFS="\t"}{print $1,$2,$3,$4,"imputed",$6}' $TEMP/TSS_geneswopeaks
 # Merge genes with & missing a Sua7_CX peak
 cat $TEMP/TSS_imputed.bed $TEMP/Sua7_deduplicate.bed > Sua7.bed
 
-#===STM===
+#===STMv1===
 # Use custom script to make Spt7 ref center
 python $STM -i $YEPTABLE -p $TEMP/Sua7_deduplicate.bed -o STM.bed -s $SHIFT_BP
+
+#===UASv2===
+echo "UASv2"
+# Identify manually annotated UAS features
+cat ../Rossi_2021_Supplementary_Data_1.txt \
+ | awk '{FS="\t";OFS="_"}{if($35!="" && $35!=".") print $35,$2,$7}' \
+ | awk '{FS="_"}{OFS="\t"}{print $3,$4,$5,$7,$1"_"$2,$6}' \
+ | sed 1d > $TEMP/UAS_manual.bed
+# Create a -150bp (upstream shift) version of the Sua7 annotations
+perl $SHIFT Sua7.bed -150 $TEMP/Sua7_upstream150.bed
+# Filter out genes with a UAS annotation from shifted Sua7 set
+perl $FILTERL $TEMP/Sua7_upstream150.bed <(cut -f4 $TEMP/UAS_manual.bed) 3 remove $TEMP/Sua7_upstream150_noManualUAS.bed
+# Merge BED of shifted Sua7 & manual UAS
+cat $TEMP/UAS_manual.bed $TEMP/Sua7_upstream150_noManualUAS.bed > $TEMP/UAS_unsort.bed
+# Update coordinates to sorted BED
+perl $UPDATEC TSS.bed $TEMP/UAS_unsort.bed $TEMP/UAS_unlabeled.bed
+# Update coordinates to sorted BED
+perl $UPDATES $TEMP/UAS_unlabeled.bed <(cut -f4,5 $TEMP/UAS_unsort.bed) UASv2.bed
+# Expand coords for occupancy calculations (200bp window)
+java -jar $SCRIPTMANAGER coordinate-manipulation expand-bed UASv2.bed -c 200 -o UASv2_200bp.bed
+
+#===UASv3===
+echo "UASv3"
+# Identify manually annotated UAS features
+head -n 5379 ../Rossi_2021_Supplementary_Data_1.txt \
+  | awk '{FS="\t";OFS="\t"}{print $1,$32,$32,$7,$30,$2}' \
+  | sed 1d > UASv3.bed
+
+
+#===UASv4===
+echo "UASv4"
+# Get list of 04_UNB genes
+perl $FILTERS TSS.bed "04_UNB" 4 keep $TEMP/TSS_04-UNB.bed
+# Update with Sua7 coord
+perl $UPDATEC $TEMP/TSS_04-UNB.bed Sua7.bed $TEMP/Sua7_04-UNB.bed
+# Shift upstream 150
+perl $SHIFT $TEMP/Sua7_04-UNB.bed -150 $TEMP/Sua7_04-UNB_upstream150.bed
+# Filter 04_UNB from UASv3
+perl $FILTERL UASv3.bed <(cut -f4 $TEMP/TSS_04-UNB.bed) 3 remove $TEMP/UASv3_minus04-UNB.bed
+# Append shifted Sua7 04_UNB RefPT to fill out filtered UASv3 set
+cat $TEMP/UASv3_minus04-UNB.bed $TEMP/Sua7_04-UNB_upstream150.bed > UASv4.bed
 
 
 ##--------Build Reference files for 11K gene feaures (YEP)--------
