@@ -36,7 +36,7 @@ cp $ORIGINAL_SCRIPTMANAGER $SCRIPTMANAGER
 BAMFILE=`ls $BAMDIR/*.bam | head -n $PBS_ARRAYID | tail -1`
 BAM=`basename $BAMFILE ".bam"`
 TYPE=`echo $BAM |cut -d"_" -f2`
-
+[ -f $BAMFILE.bai ] || samtools index $BAMFILE
 
 nucleosome_tagpileup () {
 	BEDFILE=$1
