@@ -114,4 +114,7 @@ for SPT7 in "$DBAM/11960_Spt7_i5006_BY4741_-_XO_FilteredBAM.bam" \
 do
 	ID=`basename $SPT7 ".bam" | awk -F"_" '{print $1}'`
 	count_occupancy $REFPT/STM.bed $SPT7 $TEMP/STM_sort-Spt7-$ID-Offset
+	# count_occupancy $REFPT/UASv2.bed $SPT7 $TEMP/UASv2_sort-Spt7-$ID-Offset
+	# count_occupancy $REFPT/UASv3.bed $SPT7 $TEMP/UASv3_sort-Spt7-$ID-Offset
+	# count_occupancy $REFPT/UASv4.bed $SPT7 $TEMP/UASv4_sort-Spt7-$ID-Offset
 done

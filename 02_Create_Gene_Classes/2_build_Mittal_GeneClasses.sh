@@ -6,6 +6,9 @@ WRK=/path/to/2022-Mittal_2022/02_Create_Gene_Classes
 BIN=$WRK/../bin
 ROSSI=$WRK/../data/RefPT-YEP
 MITTAL=$WRK/../data/RefPT-Mittal
+# MITTAL=$WRK/../data/RefPT-Mittal_v2
+# MITTAL=$WRK/../data/RefPT-Mittal_v3
+# MITTAL=$WRK/../data/RefPT-Mittal_v4
 TEMP=$WRK/tmp
 
 
@@ -15,6 +18,12 @@ SUA7_MHS=$TEMP/Sua7_sort-Sua7-12275-Offset-NormalizedCount.bed
 SUA7_HS=$TEMP/Sua7_sort-Sua7-26344-Offset-NormalizedCount.bed
 SPT7_MHS=$TEMP/STM_sort-Spt7-11960-Offset-NormalizedCount.bed
 SPT7_HS=$TEMP/STM_sort-Spt7-20115-Offset-NormalizedCount.bed
+# SPT7_MHS=$TEMP/UASv2_sort-Spt7-11960-Offset-NormalizedCount.bed
+# SPT7_HS=$TEMP/UASv2_sort-Spt7-20115-Offset-NormalizedCount.bed
+# SPT7_MHS=$TEMP/UASv3_sort-Spt7-11960-Offset-NormalizedCount.bed
+# SPT7_HS=$TEMP/UASv3_sort-Spt7-20115-Offset-NormalizedCount.bed
+# SPT7_MHS=$TEMP/UASv4_sort-Spt7-11960-Offset-NormalizedCount.bed
+# SPT7_HS=$TEMP/UASv4_sort-Spt7-20115-Offset-NormalizedCount.bed
 TAF2_MHS=$TEMP/Sua7_sort-Taf2-11846-Offset-NormalizedCount.bed
 TAF2_HS=$TEMP/Sua7_sort-Taf2-28736-Offset-NormalizedCount.bed
 

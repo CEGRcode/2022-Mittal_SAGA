@@ -4,6 +4,9 @@ WRK=/path/to/2022-Mittal_2022/02_Create_Gene_Classes
 BIN=$WRK/../bin
 ROSSI=$WRK/../data/RefPT-YEP
 MITTAL=$WRK/../data/RefPT-Mittal
+# MITTAL=$WRK/../data/RefPT-Mittal_v2
+# MITTAL=$WRK/../data/RefPT-Mittal_v3
+# MITTAL=$WRK/../data/RefPT-Mittal_v4
 
 #===Initial Inputs===
 M02A=$MITTAL/FEAT-Pol-II_RefPT-Sua7___SubFEAT-25C_M02a__150_SORT-Sua7occ
