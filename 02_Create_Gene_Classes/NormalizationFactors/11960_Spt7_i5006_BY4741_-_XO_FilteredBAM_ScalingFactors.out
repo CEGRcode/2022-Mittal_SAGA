@@ -1,0 +1,6 @@
+Sample file:	/Users/olivialang/Documents/GitHub/2022-Mittal_SAGA/data/BAM/11960_Spt7_i5006_BY4741_-_XO_FilteredBAM.bam
+Control file:	/Users/olivialang/Documents/GitHub/2022-Mittal_SAGA/02_Create_Gene_Classes/../data/BAM/masterNoTag_20180928.bam
+Scaling type:	NCIS
+Window size (bp):	500
+Minimum fraction:	0.75
+Scaling factor:	7.4953615770215105
