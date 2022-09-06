@@ -1,5 +1,8 @@
 # 2022-Mittal_SAGA
 
+### PMID : [XXXXXXX](https://pubmed.ncbi.nlm.nih.gov/XXXXXXX/)
+### GEO ID : [GSE212655](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE212655)
+
 
 ## data
 This directory stores both data (FASTQ & BAM files) and generally used reference files.
