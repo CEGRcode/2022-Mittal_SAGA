@@ -1,0 +1,10 @@
+RP-25C	CM43_sampleIDs.txt	FEAT-Pol-II_RefPT-Sua7__SubFEAT-YPD-25-37C-coding_01-RP___137_SORT-Sua7occ_1000bp
+M02a-25C	CM43_sampleIDs.txt	FEAT-Pol-II_RefPT-Sua7___SubFEAT-25C_M02a__150_SORT-Sua7occ_1000bp
+M03a-25C	CM43_sampleIDs.txt	FEAT-Pol-II_RefPT-Sua7___SubFEAT-25C_M03a__150_SORT-Sua7occ_1000bp
+M04-25C	CM43_sampleIDs.txt	FEAT-Pol-II_RefPT-Sua7___SubFEAT-25C_M04__150_SORT-Sua7occ_1000bp
+Induced-25C	CM43_sampleIDs.txt	FEAT-Pol-II_RefPT-Sua7___SubFEAT_Induced__72_SORT-Sua7occ_1000bp
+RP-37C	CM44_sampleIDs.txt	FEAT-Pol-II_RefPT-Sua7__SubFEAT-YPD-25-37C-coding_01-RP___137_SORT-Sua7occ_1000bp
+H02a-37C	CM44_sampleIDs.txt	FEAT-Pol-II_RefPT-Sua7___SubFEAT-37C_H02a__150_SORT-Sua7occ_1000bp
+H03a-37C	CM44_sampleIDs.txt	FEAT-Pol-II_RefPT-Sua7___SubFEAT-37C_H03a__150_SORT-Sua7occ_1000bp
+H04-37C	CM44_sampleIDs.txt	FEAT-Pol-II_RefPT-Sua7___SubFEAT-37C_H04__150_SORT-Sua7occ_1000bp
+Induced-37C	CM44_sampleIDs.txt	FEAT-Pol-II_RefPT-Sua7___SubFEAT_Induced__72_SORT-Sua7occ_1000bp
