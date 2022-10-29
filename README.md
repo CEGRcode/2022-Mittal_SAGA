@@ -5,11 +5,10 @@
 1 Department of Biochemistry and Molecular Biology, Pennsylvania State University, University Park, Pennsylvania 16801, USA
 2 Department of Molecular Biology and Genetics, Cornell University, Ithaca, New York 14850, USA
 
-### Correspondence:
-### B. Franklin Pugh <fp265@cornell.edu>
+### Correspondence: <fp265@cornell.edu>
 
 
-### PMID : [XXXXXXX](https://pubmed.ncbi.nlm.nih.gov/XXXXXXX/)
+### PMID : [36302553](https://pubmed.ncbi.nlm.nih.gov/36302553/)
 ### GEO ID : [GSE212655](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE212655)
 * ChIP-exo : [GSE212654](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE212654)
 * RNA-seq : [GSE212653](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE212653)
